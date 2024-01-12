@@ -1,12 +1,24 @@
 part of './bloc/home_bloc.dart';
 
 @RoutePage()
-class HomePageScreen extends StatelessWidget {
+class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
+
+  @override
+  State<HomePageScreen> createState() => _HomePageScreenState();
+}
+
+class _HomePageScreenState extends State<HomePageScreen> {
+  @override
+  void initState() {
+    context.read<HomeBloc>().featchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     double? money;
 
     return SafeArea(
@@ -17,6 +29,16 @@ class HomePageScreen extends StatelessWidget {
           style: GoogleFonts.rubik(),
         ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                context.read<HomeBloc>().featchData();
+              });
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -34,7 +56,8 @@ class HomePageScreen extends StatelessWidget {
                     (size.width / 1.2) / 2), // or size.height / 4
               ),
               child: StreamBuilder<Moneys?>(
-                  stream: HomeBloc().featchData(),
+                  stream: context.read<HomeBloc>()._featchDataControler.stream,
+                  initialData: null,
                   builder: (context, snapshot) {
                     if (snapshot.data == null)
                       return const Center(
@@ -117,7 +140,7 @@ class HomePageScreen extends StatelessWidget {
               height: size.height / 15,
               child: ElevatedButton(
                 onPressed: () {
-                  context.router.push(const TotalIncomePageRoute());
+                  context.router.push(TotalIncomePageRoute());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: color,
@@ -145,5 +168,11 @@ class HomePageScreen extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  @override
+  void dispose() {
+    context.read<HomeBloc>().featchData();
+    super.dispose();
   }
 }

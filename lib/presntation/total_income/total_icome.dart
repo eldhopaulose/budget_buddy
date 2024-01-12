@@ -61,7 +61,7 @@ class TotalIncomePageScreen extends StatelessWidget
       } else {
         if (state is _Faield) {
           Fluttertoast.showToast(
-              msg: "This is Center Short Toast",
+              msg: state.erorr,
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,

@@ -1,3 +1,4 @@
+import 'package:budget_buddy/domain/entities/model/income.dart';
 import 'package:budget_buddy/domain/entities/model/money.dart';
 import 'package:budget_buddy/routes/app_router.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,10 @@ void main() async {
   // Initialize hive
   await Hive.initFlutter();
   // Open the moneyBox only if it's not already open
-  if (!Hive.isAdapterRegistered(MoneysAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(MoneysAdapter().typeId) &&
+      !Hive.isAdapterRegistered(IncomeAdapter().typeId)) {
     Hive.registerAdapter(MoneysAdapter());
+    Hive.registerAdapter(IncomeAdapter());
   }
 
   runApp(MyApp());

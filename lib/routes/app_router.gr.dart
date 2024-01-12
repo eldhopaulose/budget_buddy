@@ -36,7 +36,7 @@ abstract class _$AppRouter extends RootStackRouter {
     TotalIncomePageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const TotalIncomePageScreen(),
+        child: WrappedRoute(child: const TotalIncomePageScreen()),
       );
     },
   };

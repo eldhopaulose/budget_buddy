@@ -25,6 +25,7 @@ class TotalIcomeBloc extends Bloc<TotalIcomeEvent, TotalIcomeState> {
         emit(_Success());
       } catch (e) {
         emit(_Faield(erorr: 'Error adding expense: $e'));
+        print(e);
       }
     });
   }
